@@ -19,6 +19,7 @@
 
     let ListOfPurchares=[new Item('apple',2,true),new Item('peach',5,false), new Item('pineapple',1,true)];
 
+    //1.1 вывод списка на экран - сначала false, потом true
     function WriteToDoc(ListOfPurchares) {
         for (let i=0;i<ListOfPurchares.length;i++){
             if(ListOfPurchares[i].isSold==false){
@@ -31,10 +32,10 @@
             }
         }
     }
-    //1.1
     WriteToDoc(ListOfPurchares);
     document.write('<br>');
 
+    //1.2 добавление новой покупки в список
     function AddItem(itemName, value, isS, ListOfPurchares) {
         let exist=false;
         for(let i=0;i<ListOfPurchares.length;i++) {
@@ -47,12 +48,184 @@
             ListOfPurchares.push(new Item(itemName,value,isS));
         }
     }
-    let nameIt=prompt('Enter item what do you want to add: ');
-    let value=parseInt(prompt('Enter a value: '));
-    let isS=(prompt('Is it sold? true or false: ') === 'true');
-    //1.2
-    AddItem(nameIt,value,isS,ListOfPurchares);
-    WriteToDoc(ListOfPurchares);
+    // let nameIt=prompt('Enter item what do you want to add: ');
+    // let value=parseInt(prompt('Enter a value: '));
+    // let isS=(prompt('Is it sold? true or false: ') === 'true');
+    // AddItem(nameIt,value,isS,ListOfPurchares);
+    // WriteToDoc(ListOfPurchares);
+
+    //1.3 покупка товара, отмечает товар как купленный
+    function BuyingItem(nameItem, ListOfPurchares) {
+        let n=false;
+        for (let i=0; i<ListOfPurchares.length;i++){
+            if(ListOfPurchares[i].name==nameItem) {
+                if (ListOfPurchares[i].isSold==true){
+                    alert('Item has bought yet');
+                }else {
+                    ListOfPurchares[i].isSold=true;
+                }
+                n=true;
+            }
+        }
+        if(!n) {
+            alert('List doesnt contain this item!');
+        }
+    }
+    // BuyingItem(prompt('Enter an item what you want to buy: '),ListOfPurchares);
+    // document.write('New list: \n')
+    // WriteToDoc(ListOfPurchares);
+
+    //task 2
+    class Check{
+        constructor(name,value,price){
+        this.name=name;
+        this.value=value;
+        this.price=price;
+        }
+        display(){
+            document.write(`Item: ${this.name}, value: ${this.value}, price: ${this.price}`);
+        }
+    }
+
+    let arrCheck=[new Check('apple', 5, 15.5), new Check('cap' ,2,20), new Check('catfeed',1,1200)];
+
+    //2.1
+    function PrintCheck(arrCheck) {
+        for (let i in arrCheck) {
+            arrCheck[i].display();
+            document.write('\n');
+        }
+    }
+
+    PrintCheck(arrCheck);
+
+    //2.2
+    function CommonSum(arrCheck) {
+        let sum=0;
+        for (let i in arrCheck) {
+           sum+= arrCheck[i].value*arrCheck[i].price;
+        }
+        return sum;
+    }
+    document.write(`Common sum of purchare: ${CommonSum(arrCheck)}\n`);
+
+    //2.3
+    function MaxPrice(arrCheck) {
+        let max=0;
+        let index;
+        for (let i in arrCheck) {
+            if(arrCheck[i].value*arrCheck[i].price>max){
+                max=arrCheck[i].value*arrCheck[i].price;
+                index=i;
+            }
+        }
+        return index;
+    }
+
+    document.write(`The biggest purchare: ${arrCheck[MaxPrice(arrCheck)].name} - ${arrCheck[MaxPrice(arrCheck)].price*arrCheck[MaxPrice(arrCheck)].value} uah\n`);
+
+    //2.4
+    function AveragePrice(arrCheck) {
+        let sum=0;
+        for (let i in arrCheck) {
+            sum+= arrCheck[i].price;
+        }
+        return sum/arrCheck.length;
+    }
+    document.write(`Average price of item: ${AveragePrice(arrCheck)}\n`);
+
+    //task 3
+    class Style{
+        constructor(name, value){
+            this.name=name;
+            this.value=value;
+        }
+    }
+    let styleArr=[new Style('color', 'green'), new Style('font-size', '20px'),new Style('text-align', 'center'),new Style('background', 'grey')];
+    function StyleCss(styleArr, text) {
+        let str='<p style="';
+        for (let i in styleArr){
+            str+=(styleArr[i].name+':'+styleArr[i].value+'; ');
+        }
+        str+=('">'+text+'</p>');
+        return str;
+    }
+    document.write(StyleCss(styleArr, 'go vegan'));
+
+    //task
+    class Room{
+        constructor(name,valueOfSeats,nameOfFaculty){
+            this.roomName=name;
+            this.valueOfSeats=valueOfSeats;
+            this.nameOfFaculty=nameOfFaculty;
+        }
+
+        get _value(){
+            return this.valueOfSeats;
+        }
+        set _value(value){
+                if(value>=10&&value<=20) {
+                    this.valueOfSeats=value;
+                }
+                else {
+                    alert('Just from 10 to 20 seats!');
+                }
+        }
+        display(){
+            document.write(`Room: ${this.roomName}, seats: ${this.valueOfSeats}, faculty: ${this.nameOfFaculty}`);
+        }
+    }
+
+    let roomsArr=[new Room('Comp', 15,'FIT'), new Room('Art',17,'Arts'),new Room('Arch', 11,'FIT'),new Room('Elect', 5,'FIT'),new Room('Laboratory', 20,'FIT')];
+
+    //4.1
+    function WriteAllRooms(roomsArr) {
+        for (let i in roomsArr){
+            roomsArr[i].display();
+            document.write('\n');
+        }
+    }
+
+    //4.2
+    // document.write('\nInfo about smth faculty\n');
+    // (function WriteForSmthFac(roomsArr, fac) {
+    //     for (let i in roomsArr){
+    //         if(roomsArr[i].nameOfFaculty==fac) {
+    //             roomsArr[i].display();
+    //             document.write('\n');
+    //         }
+    //     }
+    // })(roomsArr, prompt('Enter a faculty: '));
+
+    //4.3
+    class Group{
+        constructor(name, valueOfSt, faculty){
+            this.name=name;
+            this.valueOfSt=valueOfSt;
+            this.faculty=faculty;
+        }
+    }
+
+    let group1=new Group('UiU-17', 17, 'FIT');
+    document.write('\nInfo for smth group\n');
+    (function WriteForSmthFac(roomsArr, group) {
+        for (let i in roomsArr){
+            if(roomsArr[i].nameOfFaculty==group.faculty&&roomsArr[i].valueOfSeats>=group.valueOfSt) {
+                roomsArr[i].display();
+                document.write('\n');
+            }
+        }
+    })(roomsArr, group1);
+
+    //4.4
+    document.write('\nSort by ascending (seats):\n');
+    roomsArr.sort((a,b)=>Number(a.valueOfSeats)-Number(b.valueOfSeats));
+    WriteAllRooms(roomsArr);
+
+    //4.5
+    document.write('\nSort by ascending (name of room):\n');
+    roomsArr.sort((a,b)=>a.roomName.localeCompare(b.roomName));
+    WriteAllRooms(roomsArr);
 
 
 </script>
