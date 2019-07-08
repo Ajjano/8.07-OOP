@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Java Script Intro</title>
+</head>
+<style>
+
+	h3{
+		color: green;
+	}
+	h3:nth-of-type(odd){
+		color: red;
+	}
+</style>
+<body>
+	<script>
+		//Обьекты в функциях
+		function createUser(pName, pAge) 
+		{
+			return {
+				name: pName,
+				age: pAge,
+				display: function () {
+					document.write(`<h3>Name: ${this.name}, Age: ${this.age}</h3>`);
+				},
+				driveCar: function (car) {
+					document.write(`<h3>${this.name} ведет машину ${car.name}</h3>`);
+				}
+			}
+		}
+
+		function createCar(pName, pYear)
+		{
+			return {
+				name: pName,
+				year: pYear
+			}
+		}
+
+
+
+		let tom = createUser('Tom', 26);
+		let tesla = createCar('Tesla', 2019);
+		let ajjano = createUser('Ajjano', 18);
+		ajjano.display();
+		ajjano.driveCar(tesla);
+		tom.display();
+		let alice = createUser('Alice', 24);
+		alice.display();
+
+		// Конструкторы обьекты
+		function User(pName, pAge) 
+		{
+			let _password = 'qwerty';
+			this.name = pName;
+			this.age = pAge;
+			this.display = function () {
+				document.write(`<h3>Name: ${this.name}, Age: ${this.age}</h3>`);
+			};
+			this.getPassword = function () {
+				return _password;
+			};
+			this.setPassword = function (pass) {
+				if (typeof pass == 'string' && pass.length > 6) {
+					_password = pass;
+				} else {
+					console.log('Недопустимое значение');
+				}
+			};
+		}
+
+
+
+		function Employee (name, age, comp) {
+			User.call(this, name, age);
+			this.company = comp;
+			this.display = function () {
+				document.write(`<h3>Name: ${this.name}, Age: ${this.age}, company: ${this.company}</h3>`);
+			}
+		}
+
+		Employee.prototype = Object.create(User.prototype);
+		let brather = new Employee('Димон', 32, 'Tesla');
+
+
+
+
+		User.prototype.hello = function(){
+			document.write('<h3>'+this.name + ' say Hello Bingo!!!</h3>');
+		};
+		User.prototype.maxAge = 110;
+
+		function Car(pName, pAge) 
+		{
+			this.name = pName;
+			this.age = pAge;
+			this.display = function () {
+				document.write(`<h3>Name: ${this.name}, Age: ${this.age}</h3>`);
+			};
+		}
+
+		function displayInfo() {
+			console.log('Hello world');
+		}
+
+		let lisopas = new User('Lisopas', 13);
+		lisopas.maxAge = 120;
+		let _20tokens = new User('20tokens', 19);
+		lisopas.hello();
+		console.log(lisopas);
+		console.log(_20tokens);
+		console.log(_20tokens.password);
+
+		
+		document.write('<h3>'+_20tokens.name+'</h3>');
+		_20tokens.display(); 
+
+		//instanceof
+		document.write('<h3>' + (_20tokens instanceof User) + '</h3>');
+		document.write('<h3>' + (_20tokens instanceof Car) + '</h3>');
+
+		lisopas.setPassword('12356dgg');
+		document.write('<h3>'+lisopas.getPassword()+'</h3>');
+
+
+		// Функции это тоже обьекты
+		let squere = new Function('n', 'return n * n');
+		console.log(squere(5));
+		/*
+		    Свойства:
+				arguments,
+				length,
+				name,
+				prototype,
+			Методы:
+				call(),
+				apply(),
+		*/
+
+
+		function display(frase, expirianse) {
+			console.log('Your name is '+ this.name + ' - ' + frase + ' ' + expirianse);
+		}
+		Function.prototype.program = 'markforest';
+		console.log(display.program);
+
+		display.call(_20tokens, 'salam popalam', 2);
+
+		display.apply(_20tokens, ['salam', 2]);
+
+		console.log(brather.getPassword());
+
+
+		let user = {
+			name: 'Tom',
+			age: 24,
+			phone: 32424234,
+		}
+
+		// let name = user.name;
+		// let phone = user.phone;
+		let {name, phone} = user;
+
+		let users = ['Tom', 'Sam', 'Boba', 'Biba'];
+		// let [a, b, c] = users;
+		let [a,,,b] = users;
+
+		// ecma script version 6
+		class Person 
+		{
+			constructor(name, age) {
+				this.name = name;
+				this.age = age;
+			}
+			display() {
+				console.log(this.name, this.age);
+			}
+			static nameToUpper(person) {
+				return person.name.toUpperCase();
+			}
+		}
+
+		let serega = new Person('Серый', 34);
+		serega.display();
+		
+		//наследование 
+		class PersonEmployee extends Person 
+		{
+			constructor(name, age, company) {
+				super(name, age);
+				this.company = company
+			}
+			display() {
+				super.display();
+				console.log(this.company);
+			}
+			work() {
+				console.log(this.name + ' is hard working');
+			}
+		}
+
+		let mark = new Person('Mark', 32);
+		let bro = new PersonEmployee('Bro', 25, 'Google');
+		mark.display();
+		bro.display();
+		bro.work();
+
+		console.log(Person.nameToUpper(mark));
+
+	</script>
+</body>
+</html>

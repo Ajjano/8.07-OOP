@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body { white-space: pre-line; }
+    </style>
+</head>
+<body>
+<script>
+    class Item{
+        constructor(name, value, isSold){
+            this.name=name;
+            this.value=value;
+            this.isSold=isSold;
+        }
+    }
+
+    let ListOfPurchares=[new Item('apple',2,true),new Item('peach',5,false), new Item('pineapple',1,true)];
+
+    function WriteToDoc(ListOfPurchares) {
+        for (let i=0;i<ListOfPurchares.length;i++){
+            if(ListOfPurchares[i].isSold==false){
+                document.write(ListOfPurchares[i].name+' '+ListOfPurchares[i].value+' '+ListOfPurchares[i].isSold+'\n');
+            }
+        }
+        for (let i=0;i<ListOfPurchares.length;i++){
+            if(ListOfPurchares[i].isSold==true){
+                document.write(ListOfPurchares[i].name+' '+ListOfPurchares[i].value+' '+ListOfPurchares[i].isSold+'\n');
+            }
+        }
+    }
+    //1.1
+    WriteToDoc(ListOfPurchares);
+    document.write('<br>');
+
+    function AddItem(itemName, value, isS, ListOfPurchares) {
+        let exist=false;
+        for(let i=0;i<ListOfPurchares.length;i++) {
+            if(ListOfPurchares[i].name==itemName) {
+                ListOfPurchares[i].value+=value;
+                exist=true;
+            }
+        }
+        if (!exist) {
+            ListOfPurchares.push(new Item(itemName,value,isS));
+        }
+    }
+    let nameIt=prompt('Enter item what do you want to add: ');
+    let value=parseInt(prompt('Enter a value: '));
+    let isS=(prompt('Is it sold? true or false: ') === 'true');
+    //1.2
+    AddItem(nameIt,value,isS,ListOfPurchares);
+    WriteToDoc(ListOfPurchares);
+
+
+</script>
+</body>
+</html>
